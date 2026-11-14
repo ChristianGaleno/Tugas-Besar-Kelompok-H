@@ -19,10 +19,10 @@ Aplikasi marketplace preloved (Thrift.in) mempertemukan penjual dengan berbagai 
 ## Arsitektur
 Arsitektur pada topik tugas besar ini menggunakan multi linked list tipe-02 (Parent: DLL, Relasi: DLL, Child: DLL) dan binary search tree
 1. Multi Linked List Tipe-02
-![Images](https://drive.google.com/uc?id=GANTI_DENGAN_ID_GAMBAR_MLL02_KALIAN)
+![Images](https://drive.google.com/file/d/1kqhZSokWiYq0H1S-KqoaU8BN9zahAC8E/view?usp=sharing)
 
 2. Binary Search Tree
-![Images](https://drive.google.com/uc?id=GANTI_DENGAN_ID_GAMBAR_BST_KALIAN)
+![Images](https://drive.google.com/file/d/1arzmXS-nRgc0jmlnZTMYmHEOB5MVnoyp/view?usp=sharing)
 
 ---
 
