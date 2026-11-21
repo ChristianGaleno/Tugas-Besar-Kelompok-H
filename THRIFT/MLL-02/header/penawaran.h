@@ -22,7 +22,7 @@ typedef struct elmPenawaran *addressPenawaran;
 struct elmPenawaran {
     infotypePenawaran info;
     addressPenjual pPenjual;
-    addressProduk pProduk;
+    adrProduk pProduk;
     addressPenawaran prev;
     addressPenawaran next;
 };
@@ -41,7 +41,7 @@ void CreateList(ListPenawaran &LPW);
 /* I.S. sembarang
    F.S. terbentuk list LPW kosong dengan first = NULL dan last = NULL */
 
-addressPenawaran createElemen(infotypePenawaran x, addressPenjual pPenjual, addressProduk pProduk);
+addressPenawaran createElemen(infotypePenawaran x, addressPenjual pPenjual, adrProduk pProduk);
 /* I.S. info penawaran x, pointer pPenjual, dan pointer pProduk terdefinisi
    F.S. mengembalikan alamat elemen penawaran baru dengan prev = NULL, next = NULL,
         pPenjual menunjuk penjual terkait, dan pProduk menunjuk katalog produk terkait */
@@ -83,7 +83,7 @@ void printInfo(ListPenawaran LPW);
 /* I.S. list LPW terdefinisi
    F.S. menampilkan seluruh data penawaran beserta informasi penjual dan produknya */
 
-bool isProdukReferenced(ListPenawaran LPW, addressProduk pProduk);
+bool isProdukReferenced(ListPenawaran LPW, adrProduk pProduk);
 /* I.S. list LPW dan pointer pProduk terdefinisi
    F.S. mengembalikan true jika pProduk masih direferensikan oleh minimal satu penawaran */
 
