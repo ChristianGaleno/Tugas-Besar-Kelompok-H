@@ -1,99 +1,84 @@
-#ifndef MAHASISWA_H_INCLUDED
-#define MAHASISWA_H_INCLUDED
-#include "krs.h"
-#include <string>
+#ifndef PENJUAL_H_INCLUDED
+#define PENJUAL_H_INCLUDED
+
 #include <iostream>
+#include <string>
 
 using namespace std;
 
-struct ------------
-{
-    ------------
+struct Penjual {
+    string idPenjual;
+    string nama;
+    string kota;
+    string kontak;
 };
 
-typedef ------------ ------------;         // variabel alias untuk infor
-typedef  struct ------------ *------------;   // variabel alias untuk pointer
+typedef Penjual infotypePenjual;
+typedef struct elmPenjual *addressPenjual;
 
-// kerangka dari elemen list
-struct ------------
-{
-    ------------
+struct elmPenjual {
+    infotypePenjual info;
+    addressPenjual prev;
+    addressPenjual next;
 };
 
-// kerangka dari list
-struct ------------
-{
-    ------------
+struct ListPenjual {
+    addressPenjual first;
+    addressPenjual last;
 };
 
-// pengecekan apakah list kosong
-------------;
-/* I.S. list LM terdefinisi
-   F.S. true jika list kosong dan false jika tidak kosong */
+// ==================== PRIMITIF DASAR ADT (MINGGU KE-10) ====================
+bool isEmpty(ListPenjual LP);
+/* I.S. list LP terdefinisi
+   F.S. mengembalikan true jika list LP kosong (first == NULL && last == NULL), false jika tidak */
 
-------------;
-/* I.S. ~
-   F.S. terbentuk list kosong */
+void CreateList(ListPenjual &LP);
+/* I.S. sembarang
+   F.S. terbentuk list LP kosong dengan first = NULL dan last = NULL */
 
-// manajemen memori
-------------;
-/* I.S. info mahasiswa x terdefinisi
-   F.S. mengembalikan alamat elemen berisi x dengan prev/next NULL
-        dan daftar KRS dalam keadaan kosong */
+addressPenjual createElemen(infotypePenjual x);
+/* I.S. data penjual x terdefinisi
+   F.S. mengembalikan alamat elemen baru berisi info x dengan prev = NULL dan next = NULL */
 
-------------;
+void dealokasi(addressPenjual &P);
 /* I.S. pointer P terdefinisi
-   F.S. elemen mahasiswa dan seluruh elemen KRS relasinya di-dealokasi;
-        elemen mata kuliah yang dirujuk tidak ikut dihapus */
+   F.S. memori elemen yang ditunjuk P dibebaskan dan P bernilai NULL */
 
-// pencarian sebuah elemen list
-------------;
-/* I.S. list LM dan NIM terdefinisi
-   F.S. mengembalikan alamat elemen mahasiswa yang cocok atau NULL jika tidak ditemukan
-*/
+// ==================== PRIMITIF OPERASI LIST (MINGGU KE-11) ====================
+addressPenjual findElm(ListPenjual LP, string idPenjual);
+/* I.S. list LP dan idPenjual terdefinisi
+   F.S. mengembalikan alamat elemen penjual dengan idPenjual yang sesuai, atau NULL jika tidak ditemukan */
 
-// penambahan elemen *
-------------;
-/* I.S. terdefinisi list LM yang mungkin kosong dan elemen list P
-   F.S. menempatkan elemen beralamat P pada awal list */
+void insertFirst(ListPenjual &LP, addressPenjual P);
+/* I.S. list LP terdefinisi (mungkin kosong), elemen P teralokasi
+   F.S. elemen P ditempatkan sebagai elemen pertama pada list LP */
 
-------------;
-/* I.S. terdefinisi list LM yang mungkin kosong, elemen list P dan elemn list prec
-   F.S. menempatkan elemen beralamat P sesudah elemen beralamat Prec */
+void insertAfter(ListPenjual &LP, addressPenjual Prec, addressPenjual P);
+/* I.S. list LP tidak kosong, Prec adalah elemen valid di LP, elemen P teralokasi
+   F.S. elemen P disisipkan tepat setelah elemen Prec */
 
-------------;
-/* I.S. terdefinisi list LM yang mungkin kosong dan elemen list P
-   F.S. menempatkan elemen beralamat P pada akhir list */
+void insertLast(ListPenjual &LP, addressPenjual P);
+/* I.S. list LP terdefinisi (mungkin kosong), elemen P teralokasi
+   F.S. elemen P ditempatkan sebagai elemen terakhir pada list LP */
 
-// penghapusan sebuah elemen
-------------;
-/* I.S. terdefinisi list LM yang mungkin kosong dan elemen list P
-   F.S. P adalah alamat dari alamat elemen pertama list
-        yang akan dihapus dan elemen list selanjutnya akan menjadi
-        elemenlist pertama atau tidak ada elemen list pertama*/
+void deleteFirst(ListPenjual &LP, addressPenjual &P);
+/* I.S. list LP tidak kosong
+   F.S. elemen pertama LP dilepas dari list dan alamatnya disimpan pada P */
 
-------------;
-/* I.S. terdefinisi list LM yang mungkin kosong dan elemen list P
-   F.S. P adalah alamat dari alamat elemen terakhir list
-        yang akan dihapus dan elemen list sebelumnya akan menjadi
-        elemenlist terakhir atau tidak ada elemen list terakhir */
+void deleteLast(ListPenjual &LP, addressPenjual &P);
+/* I.S. list LP tidak kosong
+   F.S. elemen terakhir LP dilepas dari list dan alamatnya disimpan pada P */
 
-------------;
-/* I.S. terdefinisi list LM yang mungkin kosong, elemen list P dan elemn list prec
-   F.S. P adalah alamat dari alamat elemen list setelah prec
-        yang akan dihapus dan elemen list setelah p akan terhubung
-        langsung dengan prec atau tidak ada elemen list setelahnya */
+void deleteAfter(ListPenjual &LP, addressPenjual Prec, addressPenjual &P);
+/* I.S. list LP tidak kosong, Prec bukan elemen terakhir
+   F.S. elemen setelah Prec dilepas dari list dan alamatnya disimpan pada P */
 
-------------;
-/* I.S. terdefinisi list LM yang mungkin kosong
-   F.S. jika list tidak kosong menampilkan semua info yang ada pada list */
+void printInfo(ListPenjual LP);
+/* I.S. list LP terdefinisi
+   F.S. menampilkan seluruh data penjual pada LP ke layar, atau pesan kosong jika LP kosong */
 
-------------;
-/* I.S. terdefinisi list mahasiswa dan alamat mata kuliah
-        F.S. true jika mata kuliah masih direferensikan oleh KRS mahasiswa */
+infotypePenjual inputPenjual();
+/* I.S. sembarang
+   F.S. mengembalikan struct Penjual hasil input dari pengguna */
 
-------------;
-/* I.S. ~
-   F.S. meminta data mahasisswa dari user */
-
-#endif // MAHASISWA_H_INCLUDED
+#endif // PENJUAL_H_INCLUDED
