@@ -1,94 +1,98 @@
-#ifndef KRS_H_INCLUDED
-#define KRS_H_INCLUDED
-#include "produk.h"
-#include <string>
+#ifndef PENAWARAN_H_INCLUDED
+#define PENAWARAN_H_INCLUDED
+
 #include <iostream>
+#include <string>
+#include "penjual.h"
+#include "produk.h"
 
 using namespace std;
 
-struct ------------
-{
-    ------------
+struct Penawaran {
+    int harga;
+    string kondisiBarang;
+    int stok;
+    string status; // "tersedia" atau "habis"
 };
 
-typedef ------------ ------------;         // variabel alias untuk infor
-typedef  struct ------------ *------------;   // variabel alias untuk pointer
+typedef Penawaran infotypePenawaran;
+typedef struct elmPenawaran *addressPenawaran;
 
-// kerangka dari elemen list
-struct ------------
-{
-    ------------
+// Model MLL-02: ListRelasi berdiri sejajar (DLL) dengan pointer ke Parent dan Child
+struct elmPenawaran {
+    infotypePenawaran info;
+    addressPenjual pPenjual;
+    addressProduk pProduk;
+    addressPenawaran prev;
+    addressPenawaran next;
 };
 
-// kerangka dari list
-struct ListKRS
-{
-    ------------
+struct ListPenawaran {
+    addressPenawaran first;
+    addressPenawaran last;
 };
 
-// pengecekan apakah list kosong
-------------;
-/* I.S. list LK terdefinisi
-   F.S. true jika list kosong dan false jika tidak kosong */
+// ==================== PRIMITIF DASAR ADT (MINGGU KE-10) ====================
+bool isEmpty(ListPenawaran LPW);
+/* I.S. list LPW terdefinisi
+   F.S. mengembalikan true jika list LPW kosong (first == NULL && last == NULL), false jika tidak */
 
-// pembuatan list kosong
-------------;
-/* I.S. ~
-   F.S. terbentuk list kosong */
+void CreateList(ListPenawaran &LPW);
+/* I.S. sembarang
+   F.S. terbentuk list LPW kosong dengan first = NULL dan last = NULL */
 
-// manajemen memori
-------------;
-/* I.S. info KRS x dan alamat mata kuliah terdefinisi
-   F.S. mengembalikan alamat elemen KRS berisi x, next NULL, dan menunjuk pMatakuliah */
+addressPenawaran createElemen(infotypePenawaran x, addressPenjual pPenjual, addressProduk pProduk);
+/* I.S. info penawaran x, pointer pPenjual, dan pointer pProduk terdefinisi
+   F.S. mengembalikan alamat elemen penawaran baru dengan prev = NULL, next = NULL,
+        pPenjual menunjuk penjual terkait, dan pProduk menunjuk katalog produk terkait */
 
-------------;
+void dealokasi(addressPenawaran &P);
 /* I.S. pointer P terdefinisi
-   F.S. elemen KRS di-dealokasi; elemen mata kuliah yang ditunjuk tidak ikut dihapus */
+   F.S. memori elemen penawaran P dibebaskan dan P bernilai NULL (elemen penjual & produk tidak dihapus) */
 
-// pencarian sebuah elemen list
-------------;
-/* I.S. list LK milik mahasiswa dan ID KRS terdefinisi
-   F.S. mengembalikan alamat elemen KRS yang cocok atau NULL jika tidak ditemukan
-*/
+// ==================== PRIMITIF OPERASI LIST (MINGGU KE-11) ====================
+addressPenawaran findElm(ListPenawaran LPW, string idPenjual, string idProduk);
+/* I.S. list LPW, idPenjual, dan idProduk terdefinisi
+   F.S. mengembalikan alamat elemen penawaran yang menghubungkan idPenjual dan idProduk, atau NULL jika tidak ada */
 
-// penambahan elemen *
-------------;
-/* I.S. terdefinisi list LK yang mungkin kosong dan elemen list P
-   F.S. menempatkan elemen beralamat P pada awal list */
+void insertFirst(ListPenawaran &LPW, addressPenawaran P);
+/* I.S. list LPW terdefinisi (mungkin kosong), elemen P teralokasi
+   F.S. elemen P ditempatkan sebagai elemen pertama pada list LPW */
 
-------------;
-/* I.S. terdefinisi list LK yang mungkin kosong, elemen list P dan elemn list prec
-   F.S. menempatkan elemen beralamat P sesudah elemen beralamat Prec */
+void insertAfter(ListPenawaran &LPW, addressPenawaran Prec, addressPenawaran P);
+/* I.S. list LPW tidak kosong, Prec adalah elemen valid di LPW, elemen P teralokasi
+   F.S. elemen P disisipkan tepat setelah elemen Prec */
 
-------------;
-/* I.S. terdefinisi list LK yang mungkin kosong dan elemen list P
-   F.S. menempatkan elemen beralamat P pada akhir list */
+void insertLast(ListPenawaran &LPW, addressPenawaran P);
+/* I.S. list LPW terdefinisi (mungkin kosong), elemen P teralokasi
+   F.S. elemen P ditempatkan sebagai elemen terakhir pada list LPW */
 
-// penghapusan sebuah elemen
-------------;
-/* I.S. terdefinisi list LK yang mungkin kosong dan elemen list P
-   F.S. P adalah alamat dari alamat elemen pertama list
-        yang akan dihapus dan elemen list selanjutnya akan menjadi
-        elemenlist pertama atau tidak ada elemen list pertama*/
+void deleteFirst(ListPenawaran &LPW, addressPenawaran &P);
+/* I.S. list LPW tidak kosong
+   F.S. elemen pertama LPW dilepas dari list dan alamatnya disimpan pada P */
 
-------------;
-/* I.S. terdefinisi list LK yang mungkin kosong dan elemen list P
-   F.S. P adalah alamat dari alamat elemen terakhir list
-        yang akan dihapus dan elemen list sebelumnya akan menjadi
-        elemenlist terakhir atau tidak ada elemen list terakhir */
+void deleteLast(ListPenawaran &LPW, addressPenawaran &P);
+/* I.S. list LPW tidak kosong
+   F.S. elemen terakhir LPW dilepas dari list dan alamatnya disimpan pada P */
 
-------------;
-/* I.S. terdefinisi list LK yang mungkin kosong, elemen list P dan elemn list prec
-   F.S. P adalah alamat dari alamat elemen list setelah prec
-        yang akan dihapus dan elemen list setelah p akan terhubung
-        langsung dengan prec atau tidak ada elemen list setelahnya */
+void deleteAfter(ListPenawaran &LPW, addressPenjual Prec, addressPenawaran &P);
+/* I.S. list LPW tidak kosong, Prec bukan elemen terakhir
+   F.S. elemen setelah Prec dilepas dari list dan alamatnya disimpan pada P */
 
-------------;
-/* I.S. terdefinisi list LK yang mungkin kosong
-   F.S. jika list tidak kosong menampilkan semua info yang ada pada list */
+void printInfo(ListPenawaran LPW);
+/* I.S. list LPW terdefinisi
+   F.S. menampilkan seluruh data penawaran beserta informasi penjual dan produknya */
 
-------------;
-/* I.S. ~
-        F.S. meminta data KRS dari user */
+bool isProdukReferenced(ListPenawaran LPW, addressProduk pProduk);
+/* I.S. list LPW dan pointer pProduk terdefinisi
+   F.S. mengembalikan true jika pProduk masih direferensikan oleh minimal satu penawaran */
 
-#endif // KRS_H_INCLUDED
+bool isPenjualReferenced(ListPenawaran LPW, addressPenjual pPenjual);
+/* I.S. list LPW dan pointer pPenjual terdefinisi
+   F.S. mengembalikan true jika pPenjual masih memiliki minimal satu penawaran */
+
+infotypePenawaran inputPenawaran();
+/* I.S. sembarang
+   F.S. mengembalikan struct Penawaran hasil input dari pengguna */
+
+#endif // PENAWARAN_H_INCLUDED
