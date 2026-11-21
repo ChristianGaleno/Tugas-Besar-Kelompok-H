@@ -98,3 +98,5 @@ infotypeProduk inputProduk();
    F.S. meminta data produk dari user */
 
 #endif // PRODUK_H_INCLUDED
+
+# Christian Galeno

@@ -120,3 +120,5 @@ infotypeTransaksi inputTransaksi();
 
 
 #endif // TRANSAKSIBST_H_INCLUDED
+
+# Christian Galeno
