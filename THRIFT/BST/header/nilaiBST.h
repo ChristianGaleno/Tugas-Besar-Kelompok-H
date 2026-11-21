@@ -1,13 +1,13 @@
 #ifndef NILAIBST_H_INCLUDED
 #define NILAIBST_H_INCLUDED
+
 #include <string>
 #include <iostream>
 
 using namespace std;
 
-struct NilaiAkademik
-{
-    ------------
+struct NilaiAkademik{
+   ------------
 };
 
 typedef ------------ ------------; // variabel alias untuk infor
