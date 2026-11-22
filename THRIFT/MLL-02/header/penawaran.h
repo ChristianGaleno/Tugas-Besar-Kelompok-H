@@ -75,7 +75,7 @@ void deleteLast(ListPenawaran &LPW, addressPenawaran &P);
 /* I.S. list LPW tidak kosong
    F.S. elemen terakhir LPW dilepas dari list dan alamatnya disimpan pada P */
 
-void deleteAfter(ListPenawaran &LPW, addressPenjual Prec, addressPenawaran &P);
+void deleteAfter(ListPenawaran &LPW, addressPenawaran Prec, addressPenawaran &P);
 /* I.S. list LPW tidak kosong, Prec bukan elemen terakhir
    F.S. elemen setelah Prec dilepas dari list dan alamatnya disimpan pada P */
 
