@@ -1,114 +1,98 @@
 #include "dummy.h"
 
-namespace
+void dummyPenjual(ListPenjual &LP)
+/* I.S. LP terdefinisi dan kosong
+   F.S. LP berisi 5 data penjual */
 {
-    void appendKRS(ListMahasiswa &LM, ListMatakuliah &LMK, const string &nim, const string &kodeMK, const string &id, int semester, int tahunAkademik, const string &kelas)
-    /* I.S. mahasiswa dengan NIM dan mata kuliah dengan kode MK tersedia
-       F.S. elemen KRS baru ditambahkan ke daftar KRS mahasiswa dan terhubung ke mata kuliah */
-    {
-        addressM parent = findElm(LM, nim);
-        addressMK child = findElm(LMK, kodeMK);
-        infotypeK info = {id, kelas, "Aktif", semester, tahunAkademik};
-        addressK node = createElemen(info, child);
-        insertLast(parent->LK, node);
-    }
-
-    NilaiAkademik makeNilai(int id, const string &nim, const string &kodeMK, int tugas, int kuis, int uts, int uas)
-    /* I.S. identitas nilai dan seluruh komponen nilai terdefinisi
-       F.S. mengembalikan data nilai akademik dengan nilai akhir dan grade hasil perhitungan */
-    {
-        NilaiAkademik info;
-        info.idNilai = id;
-        info.nim = nim;
-        info.kodeMK = kodeMK;
-        info.semester = 7;
-        info.tahunAkademik = 2026;
-        info.nilaiTugas = tugas;
-        info.nilaiKuis = kuis;
-        info.nilaiUTS = uts;
-        info.nilaiUAS = uas;
-        hitungNilaiAkhir(info);
-        return info;
-    }
-}
-
-void dummyMahasiswa(ListMahasiswa &LM)
-/* I.S. LM terdefinisi dan kosong
-   F.S. LM berisi 5 mahasiswa dengan relasi DLL */
-{
-    const infotypeM data[] = {
-        {"Andi Saputra", "231001", "Informatika", 2023},
-        {"Budi Santoso", "231002", "Informatika", 2023},
-        {"Citra Lestari", "231003", "Sistem Informasi", 2023},
-        {"Dinda Putri", "231004", "Informatika", 2023},
-        {"Eko Pratama", "231005", "Sistem Informasi", 2023}
+    infotypePenjual data[5] = {
+        {"P01", "Rina Thrift",     "Bandung",    "0812-1111-2201"},
+        {"P02", "Vintage Corner",  "Jakarta",    "0813-2222-3302"},
+        {"P03", "Kloset Kedua",    "Yogyakarta", "0815-3333-4403"},
+        {"P04", "Second Chance",   "Surabaya",   "0817-4444-5504"},
+        {"P05", "Preloved Hub",    "Malang",     "0819-5555-6605"}
     };
 
-    for (unsigned int i = 0; i < sizeof(data) / sizeof(data[0]); ++i) {
-        addressM node = createElemen(data[i]);
-        insertLast(LM, node);
+    for (int i = 0; i < 5; i++) {
+        insertLast(LP, createElemen(data[i]));
     }
 }
 
-void dummyMatakuliah(ListMatakuliah &LMK)
-/* I.S. LMK terdefinisi dan kosong
-   F.S. LMK berisi 5 mata kuliah dalam SLL */
+void dummyProduk(ListProduk &LK)
+/* I.S. LK terdefinisi dan kosong
+   F.S. LK berisi 6 data katalog produk */
 {
-    const infotypeMK data[] = {
-        {"Algoritma dan Pemrograman", "IF101", 3, 1},
-        {"Struktur Data", "IF102", 3, 2},
-        {"Basis Data", "IF103", 3, 3},
-        {"Pemrograman Berorientasi Objek", "IF104", 3, 3},
-        {"Jaringan Komputer", "IF105", 3, 4}
+    infotypeProduk data[6] = {
+        {"K01", "Jaket Denim Trucker", "Jaket",  "Levi's"},
+        {"K02", "Sneakers Air Force 1", "Sepatu", "Nike"},
+        {"K03", "Kemeja Flanel",       "Kemeja", "Uniqlo"},
+        {"K04", "Tas Ransel Classic",  "Tas",    "Eastpak"},
+        {"K05", "Hoodie Basic",        "Hoodie", "H&M"},
+        {"K06", "Celana Chino Slim",   "Celana", "Zara"}
     };
 
-    for (unsigned int i = 0; i < sizeof(data) / sizeof(data[0]); ++i) {
-        addressMK node = createElemen(data[i]);
-        insertLast(LMK, node);
+    for (int i = 0; i < 6; i++) {
+        insertLastProduk(LK, alokasiProduk(data[i]));
     }
 }
 
-void dummyKRS(ListMahasiswa &LM, ListMatakuliah &LMK)
-/* I.S. LM berisi 5 mahasiswa dan LMK berisi 5 mata kuliah
-   F.S. KRS mahasiswa terhubung ke mata kuliah; total 10 relasi */
+void tambahPenawaranDummy(ListPenjual &LP, ListProduk &LK, ListPenawaran &LPW,
+                          string idPenjual, string idProduk, int harga, string kondisi, int stok)
+/* I.S. penjual idPenjual dan produk idProduk ada di LP dan LK
+   F.S. satu penawaran baru yang menghubungkan keduanya ditambahkan di akhir LPW */
 {
-    addressM parent = LM.first;
-    while (parent != NULL) {
-        CreateList(parent->LK);
-        parent = parent->next;
+    addressPenjual pP = findElm(LP, idPenjual);
+    adrProduk pK = findProduk(LK, idProduk);
+    if (pP != NULL && pK != NULL) {
+        infotypePenawaran x;
+        x.harga = harga;
+        x.kondisiBarang = kondisi;
+        x.stok = stok;
+        x.status = tentukanStatus(stok);
+        insertLast(LPW, createElemen(x, pP, pK));
     }
-
-    appendKRS(LM, LMK, "231001", "IF101", "KRS001", 7, 2026, "A");
-    appendKRS(LM, LMK, "231001", "IF103", "KRS002", 7, 2026, "A");
-    appendKRS(LM, LMK, "231002", "IF102", "KRS003", 7, 2026, "B");
-    appendKRS(LM, LMK, "231002", "IF103", "KRS004", 7, 2026, "B");
-    appendKRS(LM, LMK, "231003", "IF101", "KRS005", 7, 2026, "A");
-    appendKRS(LM, LMK, "231003", "IF104", "KRS006", 7, 2026, "A");
-    appendKRS(LM, LMK, "231004", "IF105", "KRS007", 7, 2026, "C");
-    appendKRS(LM, LMK, "231005", "IF102", "KRS008", 7, 2026, "B");
-    appendKRS(LM, LMK, "231004", "IF101", "KRS009", 7, 2026, "C");
-    appendKRS(LM, LMK, "231005", "IF103", "KRS010", 7, 2026, "B");
 }
 
-void dummyNilai(BST &T)
+void dummyPenawaran(ListPenjual &LP, ListProduk &LK, ListPenawaran &LPW)
+/* I.S. LP dan LK sudah berisi data dummy, LPW kosong
+   F.S. LPW berisi 12 penawaran yang menghubungkan penjual dan produk */
+{
+    tambahPenawaranDummy(LP, LK, LPW, "P01", "K01", 250000, "Like New",   3);
+    tambahPenawaranDummy(LP, LK, LPW, "P01", "K03", 120000, "Baik",       5);
+    tambahPenawaranDummy(LP, LK, LPW, "P01", "K05", 150000, "Baik",       0);   // stok habis
+    tambahPenawaranDummy(LP, LK, LPW, "P02", "K02", 650000, "Like New",   2);
+    tambahPenawaranDummy(LP, LK, LPW, "P02", "K01", 230000, "Baik",       4);
+    tambahPenawaranDummy(LP, LK, LPW, "P02", "K06", 140000, "Cukup Baik", 6);
+    tambahPenawaranDummy(LP, LK, LPW, "P03", "K03",  95000, "Cukup Baik", 7);
+    tambahPenawaranDummy(LP, LK, LPW, "P03", "K04", 310000, "Like New",   2);
+    tambahPenawaranDummy(LP, LK, LPW, "P04", "K02", 590000, "Baik",       3);
+    tambahPenawaranDummy(LP, LK, LPW, "P04", "K05", 165000, "Like New",   4);
+    tambahPenawaranDummy(LP, LK, LPW, "P05", "K06", 125000, "Baik",       5);
+    tambahPenawaranDummy(LP, LK, LPW, "P05", "K04", 280000, "Baik",       1);
+}
+
+void dummyTransaksi(BST &T)
 /* I.S. T terdefinisi dan kosong
-   F.S. T berisi 10 data nilai akademik */
+   F.S. T berisi 12 transaksi penjualan (konsisten dengan harga di dummyPenawaran) */
 {
-    const NilaiAkademik data[] = {
-        makeNilai(50, "231001", "IF101", 85, 80, 82, 88),
-        makeNilai(30, "231001", "IF103", 80, 75, 78, 82),
-        makeNilai(70, "231002", "IF102", 90, 85, 88, 92),
-        makeNilai(20, "231002", "IF103", 75, 78, 72, 80),
-        makeNilai(40, "231003", "IF101", 88, 90, 85, 87),
-        makeNilai(60, "231003", "IF104", 82, 80, 84, 86),
-        makeNilai(80, "231004", "IF105", 70, 75, 72, 78),
-        makeNilai(35, "231005", "IF102", 85, 82, 80, 84),
-        makeNilai(85, "231004", "IF101", 90, 88, 92, 94),
-        makeNilai(90, "231005", "IF103", 68, 70, 72, 74)
+    // total harga = harga penawaran x jumlah barang.
+    // urutan penyisipan dipilih agar pohon cukup seimbang (tinggi 4):
+    // akar = transaksi dengan jumlah barang di tengah-tengah data.
+    infotypeTransaksi data[12] = {
+        {"TRX5274", "Dewi",  "P04", "K05", 2,  330000, "lunas"},
+        {"TRX7012", "Sinta", "P05", "K06", 1,  125000, "lunas"},
+        {"TRX9156", "Andi",  "P02", "K01", 3,  690000, "lunas"},
+        {"TRX2317", "Sinta", "P02", "K02", 1,  650000, "lunas"},
+        {"TRX1042", "Andi",  "P01", "K01", 2,  500000, "lunas"},
+        {"TRX4108", "Andi",  "P01", "K03", 3,  360000, "belum bayar"},
+        {"TRX3561", "Budi",  "P03", "K03", 4,  380000, "lunas"},
+        {"TRX1583", "Rudi",  "P01", "K05", 1,  150000, "lunas"},
+        {"TRX7895", "Dewi",  "P03", "K04", 1,  310000, "lunas"},
+        {"TRX2740", "Maya",  "P05", "K04", 2,  560000, "belum bayar"},
+        {"TRX8421", "Budi",  "P04", "K02", 2, 1180000, "lunas"},
+        {"TRX6630", "Rudi",  "P02", "K06", 5,  700000, "lunas"}
     };
 
-    for (unsigned int i = 0; i < sizeof(data) / sizeof(data[0]); ++i) {
-        addressN node = createElemen(data[i]);
-        insertNode(T, node);
+    for (int i = 0; i < 12; i++) {
+        insertTransaksi(T, alokasiTransaksi(data[i]));
     }
 }
