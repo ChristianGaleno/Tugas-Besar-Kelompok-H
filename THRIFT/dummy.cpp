@@ -1,9 +1,6 @@
 #include "dummy.h"
 
-void dummyPenjual(ListPenjual &LP)
-/* I.S. LP terdefinisi dan kosong
-   F.S. LP berisi 5 data penjual */
-{
+void dummyPenjual(ListPenjual &LP){
     infotypePenjual data[5] = {
         {"P01", "Rina Thrift",     "Bandung",    "0812-1111-2201"},
         {"P02", "Vintage Corner",  "Jakarta",    "0813-2222-3302"},
@@ -17,10 +14,7 @@ void dummyPenjual(ListPenjual &LP)
     }
 }
 
-void dummyProduk(ListProduk &LK)
-/* I.S. LK terdefinisi dan kosong
-   F.S. LK berisi 6 data katalog produk */
-{
+void dummyProduk(ListProduk &LK){
     infotypeProduk data[6] = {
         {"K01", "Jaket Denim Trucker", "Jaket",  "Levi's"},
         {"K02", "Sneakers Air Force 1", "Sepatu", "Nike"},
@@ -35,11 +29,7 @@ void dummyProduk(ListProduk &LK)
     }
 }
 
-void tambahPenawaranDummy(ListPenjual &LP, ListProduk &LK, ListPenawaran &LPW,
-                          string idPenjual, string idProduk, int harga, string kondisi, int stok)
-/* I.S. penjual idPenjual dan produk idProduk ada di LP dan LK
-   F.S. satu penawaran baru yang menghubungkan keduanya ditambahkan di akhir LPW */
-{
+void tambahPenawaranDummy(ListPenjual &LP, ListProduk &LK, ListPenawaran &LPW, string idPenjual, string idProduk, int harga, string kondisi, int stok){
     addressPenjual pP = findElm(LP, idPenjual);
     adrProduk pK = findProduk(LK, idProduk);
     if (pP != NULL && pK != NULL) {
@@ -52,13 +42,10 @@ void tambahPenawaranDummy(ListPenjual &LP, ListProduk &LK, ListPenawaran &LPW,
     }
 }
 
-void dummyPenawaran(ListPenjual &LP, ListProduk &LK, ListPenawaran &LPW)
-/* I.S. LP dan LK sudah berisi data dummy, LPW kosong
-   F.S. LPW berisi 12 penawaran yang menghubungkan penjual dan produk */
-{
+void dummyPenawaran(ListPenjual &LP, ListProduk &LK, ListPenawaran &LPW){
     tambahPenawaranDummy(LP, LK, LPW, "P01", "K01", 250000, "Like New",   3);
     tambahPenawaranDummy(LP, LK, LPW, "P01", "K03", 120000, "Baik",       5);
-    tambahPenawaranDummy(LP, LK, LPW, "P01", "K05", 150000, "Baik",       0);   // stok habis
+    tambahPenawaranDummy(LP, LK, LPW, "P01", "K05", 150000, "Baik",       0);   
     tambahPenawaranDummy(LP, LK, LPW, "P02", "K02", 650000, "Like New",   2);
     tambahPenawaranDummy(LP, LK, LPW, "P02", "K01", 230000, "Baik",       4);
     tambahPenawaranDummy(LP, LK, LPW, "P02", "K06", 140000, "Cukup Baik", 6);
@@ -70,13 +57,7 @@ void dummyPenawaran(ListPenjual &LP, ListProduk &LK, ListPenawaran &LPW)
     tambahPenawaranDummy(LP, LK, LPW, "P05", "K04", 280000, "Baik",       1);
 }
 
-void dummyTransaksi(BST &T)
-/* I.S. T terdefinisi dan kosong
-   F.S. T berisi 12 transaksi penjualan (konsisten dengan harga di dummyPenawaran) */
-{
-    // total harga = harga penawaran x jumlah barang.
-    // urutan penyisipan dipilih agar pohon cukup seimbang (tinggi 4):
-    // akar = transaksi dengan jumlah barang di tengah-tengah data.
+void dummyTransaksi(BST &T){
     infotypeTransaksi data[12] = {
         {"TRX5274", "Dewi",  "P04", "K05", 2,  330000, "lunas"},
         {"TRX7012", "Sinta", "P05", "K06", 1,  125000, "lunas"},

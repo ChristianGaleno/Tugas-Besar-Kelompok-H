@@ -95,4 +95,42 @@ infotypePenawaran inputPenawaran();
 /* I.S. sembarang
    F.S. mengembalikan struct Penawaran hasil input dari pengguna */
 
+// ==================== SUBPROGRAM PENDUKUNG ====================
+string tentukanStatus(int stok);
+/* I.S. stok terdefinisi
+   F.S. mengembalikan "tersedia" jika stok > 0, "habis" jika stok = 0 */
+
+void printHeaderPenawaran();
+/* I.S. sembarang
+   F.S. judul kolom tabel penawaran ditampilkan */
+
+void printElmPenawaran(addressPenawaran P);
+/* I.S. P menunjuk elemen penawaran yang valid (bukan NULL)
+   F.S. satu baris data penawaran beserta penjual dan produknya ditampilkan */
+
+void printPenawaranByPenjual(ListPenawaran LPW, addressPenjual pPenjual);
+/* I.S. list LPW dan pPenjual terdefinisi
+   F.S. seluruh penawaran milik pPenjual ditampilkan, atau pesan jika tidak ada */
+
+void printPenawaranByProduk(ListPenawaran LPW, adrProduk pProduk);
+/* I.S. list LPW dan pProduk terdefinisi
+   F.S. seluruh penawaran untuk produk pProduk ditampilkan, atau pesan jika tidak ada */
+
+void deletePenawaranByPenjual(ListPenawaran &LPW, addressPenjual pPenjual, int &jumlahTerhapus);
+/* I.S. list LPW dan pPenjual terdefinisi
+   F.S. seluruh penawaran yang menunjuk pPenjual dihapus dan didealokasi;
+        jumlahTerhapus berisi banyaknya penawaran yang dihapus.
+        Dipanggil SEBELUM penjual dihapus agar tidak ada pointer pPenjual yang menggantung */
+
+void deletePenawaranByProduk(ListPenawaran &LPW, adrProduk pProduk, int &jumlahTerhapus);
+/* I.S. list LPW dan pProduk terdefinisi
+   F.S. seluruh penawaran yang menunjuk pProduk dihapus dan didealokasi;
+        jumlahTerhapus berisi banyaknya penawaran yang dihapus.
+        Dipanggil SEBELUM produk dihapus agar tidak ada pointer pProduk yang menggantung */
+
+void perbaruiStok(addressPenawaran P, int jumlahTerjual);
+/* I.S. P valid dan 0 < jumlahTerjual <= stok P
+   F.S. stok P berkurang sebanyak jumlahTerjual dan status diperbarui
+        ("habis" jika stok menjadi 0) */
+
 #endif // PENAWARAN_H_INCLUDED
