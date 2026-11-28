@@ -1,25 +1,29 @@
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 #include "interface.h"
 #include "dummy.h"
 
 using namespace std;
 
-int main()
-/* I.S. program mulai dijalankan
-   F.S. data dummy dimuat dan menu utama dijalankan */
-{
-    ListMahasiswa LM = {};
-    ListMatakuliah LMK = {};
-    BST T = {};
+int main() {
+    ListPenjual LP;
+    ListProduk LK;
+    ListPenawaran LPW;
+    BST T;
 
-    CreateList(LM);
-    CreateList(LMK);
-    CreateBST(T);
+    srand(time(NULL));     
 
-    dummyMahasiswa(LM);
-    dummyMatakuliah(LMK);
-    dummyKRS(LM, LMK);
-    dummyNilai(T);
+    CreateList(LP);
+    createListProduk(LK);
+    CreateList(LPW);
+    createBST(T);
 
-    menu(LM, LMK, T);
+    dummyPenjual(LP);
+    dummyProduk(LK);
+    dummyPenawaran(LP, LK, LPW);
+    dummyTransaksi(T);
+
+    menu(LP, LK, LPW, T);
+    return 0;
 }
