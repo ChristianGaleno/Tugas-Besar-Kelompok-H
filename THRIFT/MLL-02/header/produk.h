@@ -99,4 +99,4 @@ infotypeProduk inputProduk();
 
 #endif // PRODUK_H_INCLUDED
 
-# Christian Galeno
+// Christian Galeno
